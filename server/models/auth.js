@@ -8,22 +8,21 @@ const AuthSchema = new mongoose.Schema({
         trim: true
     },
 
-    username: {
+    email: {
         type: String,
         required: true,
-        trim: true
+        unique: true
     },
 
-    username: {
+    password: {
         type: String,
-        required: true,
-        trim: true
-    },
-    
-    username: {
-        type: String,
-        required: true,
-        trim: true
+        required: true
     },
 
+    date: {
+        type: Date,
+        default: new Date()
+    }
 })
+
+module.exports = mongoose.model('auth', AuthSchema)
