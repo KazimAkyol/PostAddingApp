@@ -80,5 +80,3 @@ Build a Post Adding App using MERN(MongoDB, Express, React, NodeJS).
 - Step 5: Push your application into your own public repo on Github
 
 - Step 6: Add project gif to your project and README.md file.
-
-npm i react-router-dom axios react-icons react-toastify redux react-redux redux-thunk redux-devtools-extension

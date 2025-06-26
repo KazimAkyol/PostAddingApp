@@ -1,9 +1,7 @@
-
 const AuthSchema = require('../models/auth')
 const jwt = require('jsonwebtoken')
 const bcyrpt = require('bcryptjs')
 const { json } = require('body-parser')
-
 
 const register = async (req, res) => {
     try {
