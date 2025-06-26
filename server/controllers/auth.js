@@ -44,9 +44,29 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
     try {
+        const { email, password } = req.body
+        const user = await AuthSchema.findOne(email)
+
+        if (!user) {
+            return res.status(500).json({ msg: "No such user was found!" })
+        }
+
+        const passwordCompare = await bcyrpt.compare(password, user.password)
+
+        if (!passwordCompare) {
+            return res.status(500).json({ msg: "Password entered is incorrect" })
+        }
+
+        const token = jwt.sign({ id: user._id }, "SECRET_KEY", { expiresIn: '10d' })
+
+        res.status(200), json({
+            status: "OK",
+            user,
+            token
+        })
 
     } catch (error) {
-
+        return res.status(500).json({ msg: error.message })
     }
 }
 
