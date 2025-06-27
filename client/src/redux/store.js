@@ -3,6 +3,10 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // localStorage için
 import { combineReducers } from 'redux';
 
+import authReducer from './reducers/auth';
+
+
+
 // 1. Adım: initialState ve reducers'ı tanımla (auth örneği)
 const authInitialState = {
     user: null,
@@ -28,7 +32,7 @@ const authSlice = createSlice({
 
 // 2. Adım: Reducer'ları birleştir (birden fazla slice varsa)
 const rootReducer = combineReducers({
-    auth: authSlice.reducer,
+    auth: authReducer,
     // Diğer reducer'lar buraya eklenebilir (örneğin: cart: cartReducer)
 });
 
