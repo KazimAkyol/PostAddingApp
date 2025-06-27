@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { loginAction, registerAction } from '../redux/actions/auth'
+import { useDispatch } from 'react-redux'
 
 const Auth = () => {
 
@@ -10,10 +12,20 @@ const Auth = () => {
         password: ""
     })
 
+    const dispatch = useDispatch()
+
     const onChangeFunc = (e) => {
         e.preventDefault()
 
         setAuthData({ ...authData, [e.target.name]: e.target.value })
+    }
+
+    const authFunc = () => { // authFunc onClick yaptiginda redux'ta kurulan mantigin calismasi beklenir.
+        if (signUp) {
+            dispatch(registerAction(authData))
+        } else {
+            dispatch(loginAction(authData))
+        }
     }
 
     console.log("authData", authData);
@@ -50,7 +62,7 @@ const Auth = () => {
                         placeholder='Password'
                         className='input-style' />
                 </div>
-                <div className='cursor-pointer hover:bg-indigo-800 w-full p-2 text-center bg-indigo-500 text-white rounded-md mb-3'>
+                <div onClick={authFunc} className='cursor-pointer hover:bg-indigo-800 w-full p-2 text-center bg-indigo-500 text-white rounded-md mb-3'>
                     {signUp ? "Register" : "Login"}
                 </div>
                 <div className='cursor-pointer hover:bg-indigo-700 w-full p-2 text-center bg-indigo-500 text-white rounded-md'>

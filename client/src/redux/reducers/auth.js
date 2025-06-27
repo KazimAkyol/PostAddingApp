@@ -27,5 +27,3 @@ const authReducer = (state = { auth: null }, action) => {
 }
 
 export default authReducer
-
-// 00:54:14
