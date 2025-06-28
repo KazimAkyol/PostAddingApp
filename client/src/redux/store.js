@@ -5,8 +5,6 @@ import { combineReducers } from 'redux';
 
 import authReducer from './reducers/auth';
 
-
-
 // 1. Adım: initialState ve reducers'ı tanımla (auth örneği)
 const authInitialState = {
     user: null,

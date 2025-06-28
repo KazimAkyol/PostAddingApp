@@ -38,8 +38,6 @@ const register = async (req, res) => {
     }
 }
 
-// 00:26:49
-
 const login = async (req, res) => {
     try {
         const { email, password } = req.body
@@ -77,5 +75,5 @@ function isEmail(emailAdress) {
     else
         return false
 }
-
+ 
 module.exports = { register, login }
