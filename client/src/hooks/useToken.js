@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const useToken = () => {
-  return (
-    <div>useToken</div>
-  )
+    const [token, setToken] = useState('')
+
+    useEffect(() => {
+        setToken(JSON.parse(localStorage.getItem('auth')))
+    }, [])
+    return [token]
 }
 
 export default useToken
