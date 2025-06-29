@@ -1,6 +1,5 @@
 
 
-
 const authReducer = (state = { auth: null }, action) => {
     switch (action.type) {
         case "REGISTER":
