@@ -23,6 +23,9 @@ const AuthSchema = new mongoose.Schema({
         type: Date,
         default: new Date()
     }
+}, {
+    collection: 'auth',
+    timestamps: true
 })
 
 module.exports = mongoose.model('auth', AuthSchema)

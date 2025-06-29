@@ -1,79 +1,92 @@
-const AuthSchema = require('../models/auth')
-const jwt = require('jsonwebtoken')
-const bcyrpt = require('bcryptjs')
-const { json } = require('body-parser')
+const AuthSchema = require('../models/auth');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const register = async (req, res) => {
+    const { username, password, email } = req.body;
+
     try {
-        const { username, password, email } = req.body
+        // 1. Email validation (DÜZELTİLDİ)
+        if (!isEmail(email)) {
+            return res.status(400).json({ msg: "Invalid email format" });
+        }
 
-        const user = await AuthSchema.findOne({ email })
-
+        // 2. Kullanıcı kontrolü
+        const user = await AuthSchema.findOne({ email });
         if (user) {
-            return res.status(500).json({ msg: "There is already such a user!" })
+            return res.status(400).json({ msg: "User already exists!" });
         }
 
-        if (password.length > 7) {
-            return res.status(500).json({ msg: "Password must be at least 8 characters long and contain at least one special character and at least one uppercase character" })
+        // 3. Password validation (Geliştirildi)
+        if (password.length < 8 ||
+            !/[A-Z]/.test(password) ||
+            !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+            return res.status(400).json({
+                msg: "Password must be at least 8 characters with at least one uppercase and one special character"
+            });
         }
 
-        const passwordHash = await bcyrpt.hash(password, 12)
+        // 4. Hash password
+        const passwordHash = await bcrypt.hash(password, 12);
 
-        if (isEmail(email)) {
-            return res.status(500).json({ msg: "Invalid email" })
-        }
+        // 5. Yeni kullanıcı oluştur
+        const newUser = await AuthSchema.create({
+            username,
+            email,
+            password: passwordHash
+        });
 
-        const newUser = await AuthSchema.create({ username, email, password: passwordHash })
+        // 6. Token oluştur
+        const token = jwt.sign({ id: newUser._id }, "SECRET_KEY", { expiresIn: '10d' });
 
-        const token = jwt.sign({ id: newUser._id }, "SECRET_KEY", { expiresIn: '10d' })
-
-        res.status(201), json({
+        // 7. DÜZELTİLDİ: Nokta ile .json()
+        res.status(201).json({
             status: "OK",
             newUser,
             token
-        })
+        });
 
     } catch (error) {
-        return res.status(500).json({ msg: error.message })
+        res.status(500).json({ msg: error.message });
     }
 }
 
 const login = async (req, res) => {
     try {
-        const { email, password } = req.body
-        const user = await AuthSchema.findOne(email)
+        const { email, password } = req.body;
+
+        // 1. DÜZELTİLDİ: { email } object olarak
+        const user = await AuthSchema.findOne({ email });
 
         if (!user) {
-            return res.status(500).json({ msg: "No such user was found!" })
+            return res.status(404).json({ msg: "User not found!" });
         }
 
-        const passwordCompare = await bcyrpt.compare(password, user.password)
-
+        // 2. Şifre karşılaştırma
+        const passwordCompare = await bcrypt.compare(password, user.password);
         if (!passwordCompare) {
-            return res.status(500).json({ msg: "Password entered is incorrect" })
+            return res.status(400).json({ msg: "Invalid credentials" });
         }
 
-        const token = jwt.sign({ id: user._id }, "SECRET_KEY", { expiresIn: '10d' })
+        // 3. Token oluştur
+        const token = jwt.sign({ id: user._id }, "SECRET_KEY", { expiresIn: '10d' });
 
-        res.status(200), json({
+        // 4. DÜZELTİLDİ: Nokta ile .json()
+        res.status(200).json({
             status: "OK",
             user,
             token
-        })
+        });
 
     } catch (error) {
-        return res.status(500).json({ msg: error.message })
+        res.status(500).json({ msg: error.message });
     }
 }
 
-function isEmail(emailAdress) {
-    let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    if (emailAdress.match(regex))
-        return true
-
-    else
-        return false
+// DÜZELTİLDİ: Email validation tersine çevrildi
+function isEmail(email) {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
 }
 
-module.exports = { register, login }
+module.exports = { register, login };
