@@ -7,13 +7,13 @@ const register = async (req, res) => {
     try {
         const { username, password, email } = req.body
 
-        const user = await AuthSchema.findOne(email)
+        const user = await AuthSchema.findOne({ email })
 
         if (user) {
             return res.status(500).json({ msg: "There is already such a user!" })
         }
 
-        if (password.length < 8) {
+        if (password.length > 7) {
             return res.status(500).json({ msg: "Password must be at least 8 characters long and contain at least one special character and at least one uppercase character" })
         }
 
@@ -75,5 +75,5 @@ function isEmail(emailAdress) {
     else
         return false
 }
- 
+
 module.exports = { register, login }

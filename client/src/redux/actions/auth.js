@@ -11,13 +11,7 @@ export const registerAction = (authData) => async (dispatch) => {
     } catch (error) {
         toast(error.response.data.msg, {
             position: "top-right",
-            autoClose: 5000,
-            // hideProgressBar: false, // buradan asagisi olmasa da olur!!!
-            // closeOnClick: false,
-            // pauseOnHover: true,
-            // draggable: true,
-            // progress: undefined,
-            // theme: "light",
+            autoClose: 5000
         });
     }
 }
@@ -32,13 +26,7 @@ export const loginAction = (authData) => async (dispatch) => {
     } catch (error) {
         toast(error.response.data.msg, {
             position: "top-right",
-            autoClose: 5000,
-            // hideProgressBar: false, // buradan asagisi olmasa da olur!!!
-            // closeOnClick: false,
-            // pauseOnHover: true,
-            // draggable: true,
-            // progress: undefined,
-            // theme: "light",
+            autoClose: 5000
         });
     }
 }
