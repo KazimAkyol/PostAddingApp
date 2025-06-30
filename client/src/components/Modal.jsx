@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { AiOutlineClose } from 'react-icons/ai'
+import { useDispatch } from 'react-redux'
 
 const Modal = () => {
 
@@ -8,6 +10,8 @@ const Modal = () => {
         description: ""
     })
 
+    const dispatch = useDispatch()
+
     const onChangeFunc = (e) => {
         setPostData({ ...postData, [e.target.value]: e.target.value })
     }
@@ -15,9 +19,15 @@ const Modal = () => {
     return (
         <div className='w-full h-screen bg-opacity-50 bg-black fixed top-0 left-0 bottom-0 z-50 flex items-center justify-center'>
             <div className='bg-white w-1/3 p-2 rounded-md'>
-                <h1 className='font-bold text-2xl'>
-                    Share Post
-                </h1>
+                <div
+                    onClick={() => dispatch({ type: 'MODAL', payload: false })}
+                    className='flex items-center justify-between cursor-pointer'>
+                    <h1 className='font-bold text-2xl'>
+                        Share Post
+                    </h1>
+                    <AiOutlineClose size={25} />
+                </div>
+
                 <div className='my-4 flex flex-col space-y-3'>
                     <input
                         value={postData.user}
