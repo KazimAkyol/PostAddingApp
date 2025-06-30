@@ -1,5 +1,40 @@
 
 
+// reducers/post.js
+const initialState = {
+    posts: [],
+    loading: false,
+    error: null,
+};
+
+const postReducer = (state = initialState, action) => {
+    switch (action.type) {
+        // Post ekleme, güncelleme, silme veya alma işlemleri burada olacak
+        case 'FETCH_POSTS_REQUEST':
+            return {
+                ...state,
+                loading: true,
+                error: null,
+            };
+        case 'FETCH_POSTS_SUCCESS':
+            return {
+                ...state,
+                loading: false,
+                posts: action.payload,
+            };
+        case 'FETCH_POSTS_FAILURE':
+            return {
+                ...state,
+                loading: false,
+                error: action.payload,
+            };
+        // Diğer eylemler...
+        default:
+            return state;
+    }
+};
+
+/*--------------------------------------------------------------------*
 
 const postReducer = (state = { posts: [] }, action) => {
     switch (action.type) {
@@ -27,5 +62,7 @@ const postReducer = (state = { posts: [] }, action) => {
             break;
     }
 }
+
+/*--------------------------------------------------------------------*/
 
 export default postReducer

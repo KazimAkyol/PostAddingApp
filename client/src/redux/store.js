@@ -34,7 +34,7 @@ const authSlice = createSlice({
 const rootReducer = combineReducers({
     auth: authReducer,
     modal: modalReducer,
-    post: postReducer
+    posts: postReducer
     // Diğer reducer'lar buraya eklenebilir (örneğin: cart: cartReducer)
 });
 
