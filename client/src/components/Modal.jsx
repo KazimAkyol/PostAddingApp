@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
+import { createPostAction } from '../redux/actions/post'
 
 const Modal = () => {
 
@@ -14,6 +15,10 @@ const Modal = () => {
 
     const onChangeFunc = (e) => {
         setPostData({ ...postData, [e.target.value]: e.target.value })
+    }
+
+    const postCreate = () => {
+        dispatch(createPostAction(postData))
     }
 
     return (
@@ -53,7 +58,8 @@ const Modal = () => {
                         type="text"
                         placeholder='Description' />
                 </div>
-                <div className='w-full p-2 text-center bg-indigo-600 text-white cursor-pointer hover:bg-indigo-800'>
+                <div onClick={postCreate}
+                    className='w-full p-2 text-center bg-indigo-600 text-white cursor-pointer hover:bg-indigo-800'>
                     Share
                 </div>
             </div>

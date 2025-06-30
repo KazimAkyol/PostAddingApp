@@ -5,6 +5,7 @@ import { combineReducers } from 'redux';
 
 import authReducer from './reducers/auth';
 import modalReducer from './reducers/modal';
+import postReducer from './reducers/post';
 
 // 1. Adım: initialState ve reducers'ı tanımla (auth örneği)
 const authInitialState = {
@@ -32,7 +33,8 @@ const authSlice = createSlice({
 // 2. Adım: Reducer'ları birleştir (birden fazla slice varsa)
 const rootReducer = combineReducers({
     auth: authReducer,
-    modal: modalReducer
+    modal: modalReducer,
+    post: postReducer
     // Diğer reducer'lar buraya eklenebilir (örneğin: cart: cartReducer)
 });
 
