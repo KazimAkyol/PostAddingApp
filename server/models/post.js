@@ -1,21 +1,22 @@
 const mongoose = require('mongoose')
 
-const AuthSchema = new mongoose.Schema({
-    username: {
+const PostSchema = new mongoose.Schema({
+    user: {
         type: String,
         required: true,
         trim: true
     },
 
-    email: {
+    title: {
         type: String,
         required: true,
-        unique: true
+        trim: true
     },
 
-    password: {
+    description: {
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
 
     date: {
@@ -23,8 +24,8 @@ const AuthSchema = new mongoose.Schema({
         default: new Date()
     }
 }, {
-    collection: 'auth',
+    collection: 'post',
     timestamps: true
 })
 
-module.exports = mongoose.model('auth', AuthSchema)
+module.exports = mongoose.model('post', PostSchema)
