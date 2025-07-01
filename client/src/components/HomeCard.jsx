@@ -1,4 +1,3 @@
-import React from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { GrUpdate } from 'react-icons/gr'
 import { useDispatch } from 'react-redux'
@@ -15,7 +14,6 @@ const HomeCard = ({ post }) => {
 
     const deletePost = (id) => {
         dispatch(deletePostAction(id))
-        window.location.reload() // browser'da silme iconuna basilinca datalar gidiyordu fakat, silme iconu, update iconu ve cerceve kaliyordu, bu kod bloguyla sayfa reload edilince onlar da silinmis oldu
         toast("Post deletion successful", {
             position: "top-right",
             autoClose: 5000
@@ -23,7 +21,7 @@ const HomeCard = ({ post }) => {
     }
 
     return (
-        <div className='relative w-1/4 border p-3 rounded-md bg-gray-200'>
+        <div className='relative w-1/4 border p-3 rounded-md bg-gray-200 mx-7'>
             <div className='font-bold text-xl'>
                 {post?.title}
             </div>

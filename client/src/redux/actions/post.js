@@ -31,11 +31,12 @@ export const createPostAction = (postData) => async (dispatch) => {
 
 export const updatePostAction = (id, postData) => async (dispatch) => {
     try {
-        const { data } = await axios.patch(`http://localhost:5000/updatePost${id}`, postData)
+        const { data } = await axios.patch(`http://localhost:5000/updatePost/${id}`, postData)
 
         dispatch({ type: 'UPDATE_POST', payload: data })
 
     } catch (error) {
+        console.log(error);
         toast(error.response.data.msg, {
             position: "top-right",
             autoClose: 5000

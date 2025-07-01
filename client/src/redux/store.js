@@ -1,13 +1,11 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
-import storage from 'redux-persist/lib/storage'; // localStorage için
+import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
-
 import authReducer from './reducers/auth';
 import modalReducer from './reducers/modal';
 import postReducer from './reducers/post';
 
-// 1. Adım: initialState ve reducers'ı tanımla (auth örneği)
 const authInitialState = {
     user: null,
     token: null,
@@ -30,36 +28,29 @@ const authSlice = createSlice({
     },
 });
 
-// 2. Adım: Reducer'ları birleştir (birden fazla slice varsa)
 const rootReducer = combineReducers({
     auth: authReducer,
     modal: modalReducer,
     posts: postReducer
-    // Diğer reducer'lar buraya eklenebilir (örneğin: cart: cartReducer)
 });
 
-// 3. Adım: Redux Persist yapılandırması
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['auth'], // Sadece auth kalıcı olsun
+    whitelist: ['auth'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// 4. Adım: Store'u oluştur
 const store = configureStore({
     reducer: persistedReducer,
     devTools: process.env.NODE_ENV !== 'production',
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({
-            serializableCheck: false, // Redux Persist için gerekli
+            serializableCheck: false,
         }),
 });
 
-// 5. Adım: Persist store'u dışa aktar (React'ta <PersistGate> ile kullanım için)
 export const persistor = persistStore(store);
 export default store;
-
-// 6. Adım: Action'ları dışa aktar (bileşenlerde kullanmak için)
 export const { loginSuccess, logout } = authSlice.actions;
