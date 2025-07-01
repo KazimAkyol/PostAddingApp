@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
 import { useDispatch } from 'react-redux'
 import { createPostAction } from '../redux/actions/post'
+import { toast } from 'react-toastify'
 
 const Modal = () => {
 
@@ -20,6 +21,10 @@ const Modal = () => {
     const postCreate = () => {
         dispatch(createPostAction(postData))
         dispatch({ type: 'MODAL', payload: false })
+        toast("Post creation successful", {
+            position: "top-right",
+            autoClose: 5000
+        });
     }
 
     return (

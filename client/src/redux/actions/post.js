@@ -45,7 +45,7 @@ export const updatePostAction = (id, postData) => async (dispatch) => {
 
 export const deletePostAction = (id) => async (dispatch) => {
     try {
-        await axios.delete(`http://localhost:5000/deletePost${id}`)
+        await axios.delete(`http://localhost:5000/deletePost/${id}`)
 
         dispatch({ type: 'DELETE_POST', payload: id })
 

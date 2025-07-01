@@ -11,7 +11,7 @@ const Home = () => {
     return (
         <div className='flex items-center m-5 flex-wrap'>
             {
-                posts?.map((post, i) => (
+                posts && posts?.map((post, i) => (
                     <HomeCard key={i} post={post} />
                 ))
             }
