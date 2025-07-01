@@ -1,4 +1,5 @@
 
+/*--------------------------------------------------------------------*
 
 // reducers/post.js
 const initialState = {
@@ -34,7 +35,9 @@ const postReducer = (state = initialState, action) => {
     }
 };
 
-/*--------------------------------------------------------------------*
+export default postReducer
+
+/*--------------------------------------------------------------------*/
 
 const postReducer = (state = { posts: [] }, action) => {
     switch (action.type) {
@@ -45,7 +48,7 @@ const postReducer = (state = { posts: [] }, action) => {
 
         case "CREATE_POST":
             return {
-                posts: [...state, action.payload]
+                posts: [...state.posts, action.payload]
             }
 
         case "UPDATE_POST":
@@ -59,10 +62,47 @@ const postReducer = (state = { posts: [] }, action) => {
             }
 
         default:
-            break;
+            return state;
     }
 }
 
-/*--------------------------------------------------------------------*/
 
-export default postReducer
+
+export default postReducer;
+
+/*--------------------------------------------------------------------*
+
+// reducers/post.js
+import { createSlice } from '@reduxjs/toolkit';
+
+const postInitialState = {
+    posts: [],
+    isLoading: false,
+    error: null,
+};
+
+const postSlice = createSlice({
+    name: 'post',
+    initialState: postInitialState, // Başlangıç durumunu burada tanımlayın
+    reducers: {
+        // Eylemler ve reducer mantığı buraya gelecek
+        addPost: (state, action) => {
+            state.posts.push(action.payload);
+        },
+        setPosts: (state, action) => {
+            state.posts = action.payload;
+        },
+        setLoading: (state, action) => {
+            state.isLoading = action.payload;
+        },
+        setError: (state, action) => {
+            state.error = action.payload;
+        },
+    },
+});
+
+export const { addPost, setPosts, setLoading, setError } = postSlice.actions;
+
+export default postSlice.reducer; // createSlice'ın döndürdüğü reducer'ı export edin
+
+/*--------------------------------------------------------------------*/

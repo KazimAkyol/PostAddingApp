@@ -14,7 +14,7 @@ const Modal = () => {
     const dispatch = useDispatch()
 
     const onChangeFunc = (e) => {
-        setPostData({ ...postData, [e.target.value]: e.target.value })
+        setPostData({ ...postData, [e.target.name]: e.target.value })
     }
 
     const postCreate = () => {
@@ -58,7 +58,8 @@ const Modal = () => {
                         type="text"
                         placeholder='Description' />
                 </div>
-                <div onClick={postCreate}
+                <div
+                    onClick={postCreate}
                     className='w-full p-2 text-center bg-indigo-600 text-white cursor-pointer hover:bg-indigo-800'>
                     Share
                 </div>
