@@ -50,6 +50,7 @@ export const deletePostAction = (id) => async (dispatch) => {
         dispatch({ type: 'DELETE_POST', payload: id })
 
     } catch (error) {
+        console.log(error);
         toast(error.response.data.msg, {
             position: "top-right",
             autoClose: 5000

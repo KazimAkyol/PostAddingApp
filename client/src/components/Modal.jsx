@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { AiOutlineClose } from 'react-icons/ai'
-import { useDispatch } from 'react-redux'
-import { createPostAction } from '../redux/actions/post'
+import { useDispatch, useSelector } from 'react-redux'
+import { createPostAction, updatePostAction } from '../redux/actions/post'
 import { toast } from 'react-toastify'
 
 const Modal = () => {
@@ -14,12 +14,20 @@ const Modal = () => {
 
     const dispatch = useDispatch()
 
+    const { modal } = useSelector(state => state.modal)
+
+    console.log("modal", modal);
+
     const onChangeFunc = (e) => {
         setPostData({ ...postData, [e.target.name]: e.target.value })
     }
 
     const postCreate = () => {
-        dispatch(createPostAction(postData))
+        if (modal?.updateId) {
+            dispatch(updatePostAction(modal?.updateId, postData))
+        } else {
+            dispatch(createPostAction(postData))
+        }
         dispatch({ type: 'MODAL', payload: false })
         toast("Post creation successful", {
             position: "top-right",
@@ -34,7 +42,7 @@ const Modal = () => {
                     onClick={() => dispatch({ type: 'MODAL', payload: false })}
                     className='flex items-center justify-between cursor-pointer'>
                     <h1 className='font-bold text-2xl'>
-                        Share Post
+                        {modal?.updateId ? "Update Post" : "Share Post"}
                     </h1>
                     <AiOutlineClose size={25} />
                 </div>
@@ -67,7 +75,7 @@ const Modal = () => {
                 <div
                     onClick={postCreate}
                     className='w-full p-2 text-center bg-indigo-600 text-white cursor-pointer hover:bg-indigo-800'>
-                    Share
+                    {modal?.updateId ? "Update" : "Share"}
                 </div>
             </div>
         </div>

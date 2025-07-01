@@ -2,7 +2,7 @@ import React from 'react'
 import { AiOutlineDelete } from 'react-icons/ai'
 import { GrUpdate } from 'react-icons/gr'
 import { useDispatch } from 'react-redux'
-import { deletePostAction, updatePostAction } from '../redux/actions/post'
+import { deletePostAction } from '../redux/actions/post'
 import { toast } from 'react-toastify'
 
 const HomeCard = ({ post }) => {
@@ -10,11 +10,12 @@ const HomeCard = ({ post }) => {
     const dispatch = useDispatch()
 
     const updatePost = (id) => {
-        dispatch(updatePostAction)
+        dispatch({ type: 'MODAL', payload: { open: true, updateId: id } })
     }
 
     const deletePost = (id) => {
         dispatch(deletePostAction(id))
+        window.location.reload() // browser'da silme iconuna basilinca datalar gidiyordu fakat, silme iconu, update iconu ve cerceve kaliyordu, bu kod bloguyla sayfa reload edilince onlar da silinmis oldu
         toast("Post deletion successful", {
             position: "top-right",
             autoClose: 5000
