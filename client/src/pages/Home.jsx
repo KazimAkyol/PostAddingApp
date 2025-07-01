@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import HomeCard from '../components/HomeCard';
 
 const Home = () => {
 
@@ -8,7 +9,13 @@ const Home = () => {
     console.log("posts", posts);
 
     return (
-        <div>Home</div>
+        <div>
+            {
+                posts?.map((post, i) => (
+                    <HomeCard key={i} post={post} />
+                ))
+            }
+        </div>
     )
 }
 

@@ -19,6 +19,7 @@ const Modal = () => {
 
     const postCreate = () => {
         dispatch(createPostAction(postData))
+        dispatch({ type: 'MODAL', payload: false })
     }
 
     return (
